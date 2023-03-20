@@ -1,4 +1,7 @@
 import streamlit as st
+from Home_Page import set_streamlit_page_config_once
+set_streamlit_page_config_once()
+
 import pandas as pd
 import time
 st.markdown("# Add New Car")

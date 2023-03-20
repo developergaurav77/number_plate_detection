@@ -1,12 +1,22 @@
-# from sqlalchemy.engine import create_engine,URL
 import streamlit as st
+import streamlit
+
+def set_streamlit_page_config_once():
+    try:
+        streamlit.set_page_config(layout="wide")
+    except streamlit.errors.StreamlitAPIException as e:
+        if "can only be called once per app" in e.__str__():
+            # ignore this error
+            return
+        raise e
+set_streamlit_page_config_once()
+
 import pandas as pd
 from sqlalchemy import create_engine, text
 import plotly.graph_objects as go
 
-
 def connection():
-    password = "****"
+    password = "**"
     engine = create_engine(f'mysql+pymysql://root:{password}@localhost:3306/anpr')
     return engine
 
@@ -14,7 +24,7 @@ engine = connection()
 
 def plot(x,y):
     fig = go.Figure()
-    fig.add_trace(go.Line(x=x, y=y,line=dict(color='firebrick', width=1)))
+    fig.add_trace(go.Bar(x=x, y=y,text=y))
     return fig
 
 st.markdown("# Dashboard")
